@@ -1,0 +1,26 @@
+     name      
+---------------
+ Costumer1
+ Costumer2
+ NumerocLetras
+(3 rows)
+
+   name    
+-----------
+ Employee1
+(1 row)
+
+   name    
+-----------
+ Product 1
+(1 row)
+
+ order_no | total_value 
+----------+-------------
+        1 |       71.98
+        2 |       99.99
+        3 |       98.99
+        4 |       98.99
+        5 |      109.90
+(5 rows)
+
