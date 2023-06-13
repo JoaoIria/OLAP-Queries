@@ -13,19 +13,28 @@ WHERE
   year = '2022'
 GROUP BY 
   GROUPING SETS ((SKU, city, month, day_of_month, day_of_week), (SKU, month, day_of_month, day_of_week), (SKU, day_of_month, day_of_week), (SKU, day_of_week))
-ORDER BY 
+HAVING
+  SKU IS NOT NULL
+  AND city IS NOT NULL
+  AND month IS NOT NULL
+  AND day_of_month IS NOT NULL
+  AND day_of_week IS NOT NULL
+ORDER BY
   SKU, city, month, day_of_month, day_of_week;
 
 -- Query 2: Average daily sales value of all products in 2022, globally, by month and day of the week
-SELECT 
-  month, 
-  day_of_week, 
+SELECT
+  month,
+  day_of_week,
   AVG(total_price) AS avg_daily_sales_value
-FROM 
+FROM
   product_sales
-WHERE 
+WHERE
   year = '2022'
-GROUP BY 
-  ROLLUP (month, day_of_week)
+GROUP BY
+  month, day_of_week
+HAVING
+  month IS NOT NULL
+  AND day_of_week IS NOT NULL
 ORDER BY 
   month, day_of_week;
