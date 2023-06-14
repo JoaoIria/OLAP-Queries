@@ -1,22 +1,10 @@
 -- Restrição de Integridade (RI-1)
 -- Stored Procedure: Check Employee Age
-CREATE OR REPLACE FUNCTION check_employee_age()
-RETURNS TRIGGER AS $$
-BEGIN
-  IF (date_part('year', age(NEW.bdate)) < 18) THEN
-    RAISE EXCEPTION 'Employees must be at least 18 years old.';
-  END IF;
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
+ALTER TABLE employee
+    ADD CONSTRAINT check_employee_age
+        CHECK (DATE_PART('YEAR', CURRENT_DATE) - DATE_PART('YEAR', bdate) >= 18);
 
--- Trigger: Enforce Employee Age Constraint
-DROP TRIGGER IF EXISTS enforce_employee_age ON employee;
-CREATE TRIGGER enforce_employee_age
-BEFORE INSERT OR UPDATE ON employee
-FOR EACH ROW
-EXECUTE FUNCTION check_employee_age();
-
+-- MUDARRRRRRR
 -- Restrição de Integridade (RI-2)
 -- Stored Procedure: Check Workplace Type Constraint
 CREATE OR REPLACE FUNCTION check_workplace_type()
