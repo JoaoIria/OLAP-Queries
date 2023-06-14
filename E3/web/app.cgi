@@ -22,6 +22,33 @@ def check_supplier_exists(cursor, tin):
     supplier = cursor.fetchone()
     return supplier is not None
 
+def check_product_ean(product_ean):
+    if product_ean is None:
+        return None
+    elif not product_ean.isdigit():
+        return "Error: EAN is not a numeric sequence"
+    elif int(product_ean) < 0:
+        return "Error: EAN is negative"
+    else:
+        return None
+
+
+def check_existing_product(cursor, product_sku, product_ean):
+    cursor.execute("SELECT * FROM product WHERE SKU = %(product_sku)s", {'product_sku': product_sku})
+    product = cursor.fetchone()
+
+    if product is not None:
+        return "Error: Product already exists"
+
+    if product_ean is not None:
+        cursor.execute("SELECT * FROM product WHERE ean = %(product_ean)s", {'product_ean': product_ean})
+        product = cursor.fetchone()
+
+        if product is not None:
+            return "Error: Product already exists"
+
+    return None
+
 
 def print_error(message):
     print("<h1>{}</h1>".format(message))
@@ -107,12 +134,29 @@ def reg_supplier(form, c, conn):
 def reg_product(form, c, conn):
     product_sku = form.getvalue('get_product_sku')
     product_name = form.getvalue('get_product_name')
-    product_descr = form.getvalue('get_product_description')
+    product_description = form.getvalue('get_product_description')
     product_price = form.getvalue('get_product_price')
     product_ean = form.getvalue('get_product_ean')
 
-
-    return
+    if check_product_ean(product_ean) is not None:
+        print_error(check_product_ean(product_ean))
+        return
+    
+    if check_existing_product(c, product_sku, product_ean) is not None:
+        print_error(check_existing_product(c, product_sku, product_ean))
+        return
+    c.execute(
+        "INSERT INTO customer VALUES(%(product_sku)s, %(product_name)s, %(product_description)s, %(product_price)s, %(product_ean)s)",
+        {
+            'product_sku': product_sku,
+            'product_name': product_name,
+            'product_description': product_description,
+            'product_price': product_price,
+            'product_ean': product_ean
+        }
+    )
+    conn.commit()
+    print_success("Customer registered successfully")
 
 
 data_base = 'ist198954'
@@ -181,3 +225,4 @@ finally:
 print("</div>")
 print('</body>')
 print('</html>')
+
