@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registro de Produto</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1>Registro de Produto</h1>
+    <form action="register_product.py" method="POST">
+        <label for="product_sku">SKU:</label>
+        <input type="text" id="product_sku" name="product_register_sku" required>
+
+        <label for="product_name">Nome:</label>
+        <input type="text" id="product_name" name="product_register_name" required>
+
+        <label for="product_price">Preço:</label>
+        <input type="number" id="product_price" name="product_register_price" required>
+
+        <input type="submit" value="Registrar Produto">
+    </form>
+</body>
+</html>
