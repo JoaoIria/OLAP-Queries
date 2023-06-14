@@ -210,7 +210,7 @@ try:
     elif 'pay_order_no' in form_keys:
         pay_an_order(form, c, conn)
     else:
-        print('<h1>Unknown Operation</h1>')
+        print('<h1> Unexpected behaviour </h1>')
 
     c.close()
 
