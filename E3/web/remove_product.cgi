@@ -4,7 +4,7 @@ import re
 import login
 
 
-def do_stuff(form, c):
+def do_stuff(form, c, conn):
 
     sku = form.getvalue('get_product_sku')
     ean = form.getvalue('get_product_ean')
@@ -27,6 +27,7 @@ def do_stuff(form, c):
         print("<form action='index.HTML'>")
         print("    <input type='submit' value='Go Back'>")
         print("</form>")
+        conn.commit()
     return
 
 
@@ -54,7 +55,7 @@ try:
     form = cgi.FieldStorage()
     form_keys = form.keys()
 
-    dostuff(form, c)
+    dostuff(form, c, conn)
 
     c.close()
 

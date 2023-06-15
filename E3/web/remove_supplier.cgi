@@ -3,7 +3,7 @@ import psycopg2
 import re
 import login
 
-def dostuff(form, c):
+def dostuff(form, c, conn):
     tin = form.getvalue('get_suplier_tin')
 
     c.execute("SELECT * FROM supplier WHERE TIN = %(tin)s", {'tin': tin})
@@ -23,6 +23,7 @@ def dostuff(form, c):
         print("<form action='index.HTML'>")
         print("    <input type='submit' value='Go Back'>")
         print("</form>")
+        conn.commit()
     return
 
 conn = None
@@ -49,7 +50,7 @@ try:
     form = cgi.FieldStorage()
     form_keys = form.keys()
 
-    dostuff(form, c)
+    dostuff(form, c, conn)
 
     c.close()
 
