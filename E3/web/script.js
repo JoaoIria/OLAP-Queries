@@ -24,7 +24,7 @@ function openSecondaryMenu(menuName) {
       case 'register_product':
         return `
           <div class="secondary-menu">
-            <h2>Registar produtos</h2>
+            <h2>Register products</h2>
             <form action="app.cgi" method="post">
               <label for="product_sku">Product SKU:</label>
               <input type="text" name="reg_product_sku" id="product_sku" required>
@@ -49,7 +49,7 @@ function openSecondaryMenu(menuName) {
       case 'remove_product':
         return `
           <div class="secondary-menu">
-            <h2>Remover produtos</h2>
+            <h2>Remove Products</h2>
             <!-- Add your form for removing products here -->
           </div>
         `;
