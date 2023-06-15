@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registar produtos</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <style>
+    /* Add specific styles for the register_product.html page here */
+  </style>
+</head>
+<body>
+  <div class="content">
+    <h1>Registar produtos</h1>
+    <form action="app.cgi" method="post">
+      <div class="secondary-menu">
+        <label for="product_sku">Product SKU:</label>
+        <input type="text" name="reg_product_sku" id="product_sku" required>
+        
+        <label for="product_name">Product Name:</label>
+        <input type="text" name="get_product_name" id="product_name" required>
+        
+        <label for="product_description">Product Description:</label>
+        <textarea name="get_product_description" id="product_description" required></textarea>
+        
+        <label for="product_price">Product Price:</label>
+        <input type="text" name="get_product_price" id="product_price" required>
+        
+        <label for="product_ean">Product EAN:</label>
+        <input type="text" name="get_product_ean" id="product_ean">
+        
+        <input type="submit" value="Register Product">
+      </div>
+    </form>
+  </div>
+</body>
+</html>
