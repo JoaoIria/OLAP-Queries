@@ -53,6 +53,64 @@ function openSecondaryMenu(menuName) {
             <!-- Add your form for removing products here -->
           </div>
         `;
+
+      case 'register_supplier':
+          return `
+            <div class="secondary-menu">
+              <h2>Register Supplier</h2>
+              <!-- Add your form for removing products here -->
+            </div>
+          `;
+
+      case 'remove_supplier':
+            return `
+              <div class="secondary-menu">
+                <h2>Remove Supplier</h2>
+                <!-- Add your form for removing products here -->
+              </div>
+            `;
+
+      case 'change_product':
+            return `
+              <div class="secondary-menu">
+                <h2>Change Product</h2>
+                <!-- Add your form for removing products here -->
+              </div>
+            `;
+
+
+      case 'register_client':
+            return `
+              <div class="secondary-menu">
+                <h2>Register Client</h2>
+                <!-- Add your form for removing products here -->
+              </div>
+            `;
+
+
+      case 'remove_client':
+            return `
+              <div class="secondary-menu">
+                <h2>Remove Client</h2>
+                <!-- Add your form for removing products here -->
+              </div>
+            `;
+  
+      case 'make_order':
+            return `
+              <div class="secondary-menu">
+                <h2>Make Order</h2>
+                <!-- Add your form for removing products here -->
+              </div>
+            `;
+
+      case 'pay_order':
+            return `
+              <div class="secondary-menu">
+                <h2>Pay Order</h2>
+                <!-- Add your form for removing products here -->
+              </div>
+            `;
   
       // Add other menu options with their respective HTML content
   
