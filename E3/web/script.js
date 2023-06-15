@@ -120,8 +120,8 @@ function getSecondaryMenuContent(menuName) {
               <div class="secondary-menu">
                 <h2>Register Client</h2>
                 <form action="app.cgi" method="post">
-                <label for="cust_no">Customer Number:</label>
-                <input type="text" name="reg_cust_no" id="cust_no" required>
+                <label for="customer_id">Customer ID:</label>
+                <input type="text" name="customer_id" id="customer_id" required>
                 <br><br>
                 <label for="name">Name:</label>
                 <input type="text" name="reg_name" id="name" required>
@@ -146,8 +146,8 @@ function getSecondaryMenuContent(menuName) {
               <div class="secondary-menu">
                 <h2>Remove Client</h2>
                 <form action="app.cgi" method="post">
-                  <label for="cust_no">Customer Number:</label>
-                  <input type="text" name="reg_cust_no" id="cust_no" required>
+                <label for="customer_id">Customer ID:</label>
+                <input type="text" name="customer_id" id="customer_id" required>
                   <br><br>
                   <input type="submit" value="Remove">
                   </form>
