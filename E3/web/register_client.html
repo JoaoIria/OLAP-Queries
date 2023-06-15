@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register Client</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <div class="content">
+    <h1>Register Client</h1>
+    <form action="app.cgi" method="post">
+      <div class="secondary-menu">
+        <label for="cust_no">Customer Number:</label>
+        <input type="text" name="reg_cust_no" id="cust_no" required>
+        
+        <label for="name">Name:</label>
+        <input type="text" name="reg_name" id="name" required>
+        
+        <label for="email">Email:</label>
+        <input type="email" name="reg_email" id="email" required>
+        
+        <label for="phone">Phone:</label>
+        <input type="text" name="reg_phone" id="phone" required>
+        
+        <label for="address">Address:</label>
+        <textarea name="reg_address" id="address" required></textarea>
+        
+        <input type="submit" value="Submit">
+      </div>
+    </form>
+  </div>
+</body>
+</html>

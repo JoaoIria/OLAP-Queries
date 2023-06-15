@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Change Product</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+  <div class="content">
+    <h1>Change Product</h1>
+    <form action="app.cgi" method="post">
+      <div class="secondary-menu">
+        <label for="product_sku">Product SKU:</label>
+        <input type="text" name="change_product_sku" id="product_sku" required>
+        
+        <label for="product_price">New Product Price:</label>
+        <input type="text" name="change_product_price" id="product_price">
+        
+        <label for="product_description">New Product Description:</label>
+        <textarea name="change_product_description" id="product_description"></textarea>
+        
+        <input type="submit" value="Submit">
+      </div>
+    </form>
+  </div>
+</body>
+</html>

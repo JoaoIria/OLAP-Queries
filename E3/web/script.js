@@ -41,7 +41,7 @@ function getSecondaryMenuContent(menuName) {
             <label for="product_ean">Product EAN:</label>
             <input type="text" name="get_product_ean" id="product_ean">
             <br><br>
-            <input type="submit" value="Register Product">
+            <input type="submit" value="Submit">
           </form>
         </div>
       `;
@@ -54,7 +54,7 @@ function getSecondaryMenuContent(menuName) {
             <label for="product_sku">Product SKU:</label>
             <input type="text" name="remove_product_sku" id="product_sku" required>
             <br><br>
-            <input type="submit" value="Remove Product">
+            <input type="submit" value="Remove">
           </form>
         </div>
       `;
@@ -76,7 +76,7 @@ function getSecondaryMenuContent(menuName) {
             <label for="product_sku">Product SKU:</label>
             <input type="text" name="reg_product_sku" id="product_sku" required>
             <br><br>
-            <input type="submit" value="Register Supplier">
+            <input type="submit" value="Submit">
           </form>
         </div>
       `;
@@ -85,15 +85,32 @@ function getSecondaryMenuContent(menuName) {
             return `
               <div class="secondary-menu">
                 <h2>Remove Supplier</h2>
-                <!-- Add your form for removing products here -->
+                <form action="app.cgi" method="post">
+                <div class="secondary-menu">
+                  <label for="reg_supplier_tin">Supplier SKU:</label>
+                  <input type="text" name="reg_supplier_tin" id="reg_supplier_tin" required>
+                  <br><br>
+                  <input type="submit" value="Remove">
+                  </form>
               </div>
             `;
 
       case 'change_product':
             return `
               <div class="secondary-menu">
-                <h2>Change Product</h2>
-                <!-- Add your form for removing products here -->
+              <h2>Change Product</h2>
+              <form action="app.cgi" method="post">
+                <label for="product_sku">Product SKU:</label>
+                <input type="text" name="change_product_sku" id="product_sku" required>
+                <br><br>
+                <label for="product_price">New Product Price:</label>
+                <input type="text" name="change_product_price" id="product_price">
+                <br><br>
+                <label for="product_description">New Product Description:</label>
+                <textarea name="change_product_description" id="product_description"></textarea>
+                <br><br>
+                <input type="submit" value="Submit">
+              </form>
               </div>
             `;
 
@@ -102,7 +119,24 @@ function getSecondaryMenuContent(menuName) {
             return `
               <div class="secondary-menu">
                 <h2>Register Client</h2>
-                <!-- Add your form for removing products here -->
+                <form action="app.cgi" method="post">
+                <label for="cust_no">Customer Number:</label>
+                <input type="text" name="reg_cust_no" id="cust_no" required>
+                <br><br>
+                <label for="name">Name:</label>
+                <input type="text" name="reg_name" id="name" required>
+                <br><br>
+                <label for="email">Email:</label>
+                <input type="email" name="reg_email" id="email" required>
+                <br><br>
+                <label for="phone">Phone:</label>
+                <input type="text" name="reg_phone" id="phone" required>
+                <br><br>
+                <label for="address">Address:</label>
+                <textarea name="reg_address" id="address" required></textarea>
+                <br><br>
+                <input type="submit" value="Submit">
+                </form>
               </div>
             `;
 
@@ -111,7 +145,12 @@ function getSecondaryMenuContent(menuName) {
             return `
               <div class="secondary-menu">
                 <h2>Remove Client</h2>
-                <!-- Add your form for removing products here -->
+                <form action="app.cgi" method="post">
+                  <label for="cust_no">Customer Number:</label>
+                  <input type="text" name="reg_cust_no" id="cust_no" required>
+                  <br><br>
+                  <input type="submit" value="Remove">
+                  </form>
               </div>
             `;
   
@@ -119,7 +158,24 @@ function getSecondaryMenuContent(menuName) {
             return `
               <div class="secondary-menu">
                 <h2>Make Order</h2>
-                <!-- Add your form for removing products here -->
+                <form action="app.cgi" method="post">
+                <label for="order_id">Order ID:</label>
+                <input type="text" name="order_id" id="order_id" required>
+                <br><br>
+                <label for="customer_id">Customer ID:</label>
+                <input type="text" name="customer_id" id="customer_id" required>
+                <br><br>
+                <label for="product_sku">Product SKU:</label>
+                <input type="text" name="product_sku" id="product_sku" required>
+                <br><br>
+                <label for="order_date">Order Date:</label>
+                <input type="date" name="order_date" id="order_date" required>
+                <br><br>
+                <label for="quantity">Quantity:</label>
+                <input type="number" name="quantity" id="quantity" required>
+                <br><br>
+                <input type="submit" value="Submit">
+                </form>
               </div>
             `;
 
@@ -127,7 +183,15 @@ function getSecondaryMenuContent(menuName) {
             return `
               <div class="secondary-menu">
                 <h2>Pay Order</h2>
-                <!-- Add your form for removing products here -->
+                <form action="app.cgi" method="post">
+                <label for="order_id">Order ID:</label>
+                <input type="text" name="order_id" id="order_id" required>
+                <br><br>
+                <label for="customer_id">Customer ID:</label>
+                <input type="text" name="customer_id" id="customer_id" required>
+                <br><br>
+                <input type="submit" value="Pay">
+                </form>
               </div>
             `;
   
