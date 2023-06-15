@@ -49,8 +49,7 @@ function openSecondaryMenu(menuName) {
       case 'remove_product':
         return `
           <div class="secondary-menu">
-            <h2>Remove Products</h2>
-            <!-- Add your form for removing products here -->
+            <form action="remove_product.cgi" method="get">
           </div>
         `;
 

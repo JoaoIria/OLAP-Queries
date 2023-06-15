@@ -159,10 +159,10 @@ def reg_product(form, c, conn):
     print_success("Customer registered successfully")
 
 
-data_base = 'ist198954'
+data_base = 'ist1103557'
 db_host = 'db.tecnico.ulisboa.pt'
 db_port = 5432
-db_password = 'ujar9764'
+db_password = 'aaaa1111'
 db_connection_str = "host=%s port=%d user=%s password=%s dbname=%s" % (db_host, db_port, data_base, db_password, data_base)
 
 conn = None
@@ -189,26 +189,8 @@ try:
     form = cgi.FieldStorage()
     form_keys = form.keys()
 
-    if 'get_customer_id' in form_keys:
-        reg_customer(form, c, conn)
-    elif 'get_supplier_tin' in form_keys:
-        reg_supplier(form, c, conn) 
-    elif 'reg_product_sku' in form_keys:
-        reg_product(form, c, conn)
-    elif 'product_remove_sku' in form_keys:
-        remove_product(form, c, conn)
-    elif 'supplier_tin_remove' in form_keys:
-        remove_supplier(form, c, conn)
-    elif 'product_id_price' in form_keys:
-        modify_product_price(form, c, conn)
-    elif 'product_id_description' in form_keys:
-        modify_product_description(form, c, conn)
-    elif 'customer_remove_id' in form_keys:
-        remove_customer(form, c, conn)
-    elif 'make_order_no' in form_keys:
+    if 'make_order_no' in form_keys:
         make_an_order(form, c, conn)
-    elif 'pay_order_no' in form_keys:
-        pay_an_order(form, c, conn)
     else:
         print('<h1> Unexpected behaviour </h1>')
 
