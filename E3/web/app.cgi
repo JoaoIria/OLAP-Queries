@@ -189,7 +189,7 @@ try:
     form = cgi.FieldStorage()
     form_keys = form.keys()
 
-    if 'get_customer_id' in form_keys:
+    if 'product_sku' in form_keys:
         reg_customer(form, c, conn)
     elif 'get_supplier_tin' in form_keys:
         reg_supplier(form, c, conn) 
