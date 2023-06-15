@@ -192,7 +192,7 @@ try:
     if 'get_customer_id' in form_keys:
         reg_customer(form, c, conn)
     elif 'get_supplier_tin' in form_keys:
-        reg_supplier(form, c, conn) 
+        reg_supplier(form, c, conn)
     elif 'reg_product_sku' in form_keys:
         reg_product(form, c, conn)
     elif 'product_remove_sku' in form_keys:

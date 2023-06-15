@@ -1,21 +1,34 @@
 import cgi
 import psycopg2
 import re
-
-def remove_product(sku):
-    cursor.execute("DELETE FROM delivery WHERE SKU = %(sku)s
-                    DELETE FROM suplier WHERE SKU = %(sku)s
-                    DELETE FROM contains WHERE SKU = %(sku)s
-                    DELETE FROM product WHERE SKU = %(sku)s", {'sku': sku})
-    #refresh page
-    print ("<meta http-equiv=\"refresh\" content=\"0")
+import login
 
 
-data_base = 'ist1103557'
-db_host = 'db.tecnico.ulisboa.pt'
-db_port = 5432
-db_password = 'aaaa1111'
-db_connection_str = "host=%s port=%d user=%s password=%s dbname=%s" % (db_host, db_port, data_base, db_password, data_base)
+def do_stuff(form, c):
+
+    sku = form.getvalue('get_product_sku')
+    ean = form.getvalue('get_product_ean')
+
+    c.execute("SELECT * FROM product WHERE {} = %(sku)s", {'sku': sku})
+    prod = c.fetchone()
+
+    if prod is None:
+        print("<h1>Product to be deleted %(sku)s doesn't exist.</h1>", {'sku': sku})
+        print("<form action='index.HTML'>")
+        print("    <input type='submit' value='Go Back'>")
+        print("</form>")
+        return
+    else:
+        cursor.execute("DELETE FROM delivery WHERE SKU = %(sku)s
+            DELETE FROM suplier WHERE SKU = %(sku)s
+            DELETE FROM contains WHERE SKU = %(sku)s
+            DELETE FROM product WHERE SKU = %(sku)s", {'sku': sku})
+        print("<h1>Product %(sku)s removed successfully.</h1>", {'sku': sku})
+        print("<form action='index.HTML'>")
+        print("    <input type='submit' value='Go Back'>")
+        print("</form>")
+    return
+
 
 conn = None
 dsn = f'host={db_host} port={db_port} user={data_base} password={db_password} dbname={data_base}'
@@ -34,25 +47,14 @@ print('''
 
 try:
     # Estabelecendo conexão
-    conn = psycopg2.connect(dsn)
+    conn = psycopg2.connect(login.credentials)
     conn.autocommit = False
     c = conn.cursor()
 
     form = cgi.FieldStorage()
     form_keys = form.keys()
 
-    #print the product table
-    products = c.execute("SELECT sku, name FROM product")
-
-    print('<table border="0" cellspacing="5">')
-    for row in products:
-        print('<tr>')
-        for value in row:
-            print('<td>{}</td>'.format(value))
-        #this bellow should be the delete button
-        print('<td><input type="hidden" name="id" value="1"><a onClick="remove_product(1)" href="">1</a>'.format(row[0]))
-        print('</tr>')
-    print('</table>')
+    dostuff(form, c)
 
     c.close()
 
