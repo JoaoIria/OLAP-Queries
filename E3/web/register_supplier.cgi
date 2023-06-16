@@ -43,6 +43,7 @@ def print_success(message):
 def reg_supplier(form, c, conn):
     supplier_name = form.getvalue('get_supplier_name')
     supplier_address = form.getvalue('get_supplier_address')
+    date = form.getvalue('date')
 
     # Check if a supplier with the given TIN already exists
     
@@ -62,9 +63,9 @@ def reg_supplier(form, c, conn):
 
     # Create the supplier
     c.execute(
-        "INSERT INTO supplier VALUES (%(tin)s, %(supplier_name)s, %(supplier_address)s, %(product_sku)s)",
+        "INSERT INTO supplier VALUES (%(tin)s, %(supplier_name)s, %(supplier_address)s, %(product_sku)s), %(date)s)",
         {'tin': supplier_tin, 'supplier_name': supplier_name,
-         'supplier_address': supplier_address, 'product_sku': product_sku})
+         'supplier_address': supplier_address, 'product_sku': product_sku, 'date': date})
 
     conn.commit()
     print_success("Supplier registered successfully")
@@ -89,7 +90,7 @@ try:
     conn = psycopg2.connect(login.credentials)
     conn.autocommit = False
     c = conn.cursor()
-
+    
     form = cgi.FieldStorage()
     form_keys = form.keys()
 

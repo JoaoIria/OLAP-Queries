@@ -76,6 +76,9 @@ function getSecondaryMenuContent(menuName) {
             <label for="product_sku">Product SKU:</label>
             <input type="text" name="reg_product_sku" id="product_sku" required>
             <br><br>
+            <label for="order_date">Order Date:</label>
+            <input type="date" name="order_date" id="order_date" required>
+            <br><br>
             <input type="submit" value="Submit">
           </form>
         </div>
@@ -158,7 +161,7 @@ function getSecondaryMenuContent(menuName) {
             return `
               <div class="secondary-menu">
                 <h2>Make Order</h2>
-                <form action="app.cgi" method="post">
+                <form action="make_order.cgi" method="post">
                 <label for="order_id">Order ID:</label>
                 <input type="text" name="order_id" id="order_id" required>
                 <br><br>
