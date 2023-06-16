@@ -6,8 +6,7 @@ import login
 
 def do_stuff(form, c, conn):
 
-    sku = form.getvalue('get_product_sku')
-    ean = form.getvalue('get_product_ean')
+    sku = form.getvalue('product_sku')
 
     c.execute("SELECT * FROM product WHERE {} = %(sku)s", {'sku': sku})
     prod = c.fetchone()

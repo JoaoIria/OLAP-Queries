@@ -50,7 +50,7 @@ function getSecondaryMenuContent(menuName) {
       return `
         <div class="secondary-menu">
           <h2>Remove Products</h2>
-          <form action="app.cgi" method="post">
+          <form action="remove_product.cgi" method="post">
             <label for="product_sku">Product SKU:</label>
             <input type="text" name="remove_product_sku" id="product_sku" required>
             <br><br>
@@ -85,9 +85,9 @@ function getSecondaryMenuContent(menuName) {
             return `
               <div class="secondary-menu">
                 <h2>Remove Supplier</h2>
-                <form action="app.cgi" method="post">
+                <form action="remove_supplier.cgi" method="post">
                 <div class="secondary-menu">
-                  <label for="reg_supplier_tin">Supplier SKU:</label>
+                  <label for="reg_supplier_tin">Supplier TIN:</label>
                   <input type="text" name="reg_supplier_tin" id="reg_supplier_tin" required>
                   <br><br>
                   <input type="submit" value="Remove">
@@ -99,7 +99,7 @@ function getSecondaryMenuContent(menuName) {
             return `
               <div class="secondary-menu">
               <h2>Change Product</h2>
-              <form action="app.cgi" method="post">
+              <form action="change_product.cgi" method="post">
                 <label for="product_sku">Product SKU:</label>
                 <input type="text" name="change_product_sku" id="product_sku" required>
                 <br><br>
@@ -145,7 +145,7 @@ function getSecondaryMenuContent(menuName) {
             return `
               <div class="secondary-menu">
                 <h2>Remove Client</h2>
-                <form action="app.cgi" method="post">
+                <form action="remove_client.cgi" method="post">
                 <label for="customer_id">Customer ID:</label>
                 <input type="text" name="customer_id" id="customer_id" required>
                   <br><br>
@@ -183,7 +183,7 @@ function getSecondaryMenuContent(menuName) {
             return `
               <div class="secondary-menu">
                 <h2>Pay Order</h2>
-                <form action="app.cgi" method="post">
+                <form action="pay_order.cgi" method="post">
                 <label for="order_id">Order ID:</label>
                 <input type="text" name="order_id" id="order_id" required>
                 <br><br>

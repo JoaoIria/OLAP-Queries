@@ -5,9 +5,9 @@ import login
 
 def dostuff(form, c, conn):
 
-    sku = form.getvalue('get_product_sku')
-    price = form.getvalue('get_product_price')
-    descr = form.getvalue('get_product_description')
+    sku = form.getvalue('product_sku')
+    price = form.getvalue('product_price')
+    descr = form.getvalue('product_description')
 
     c.execute("SELECT * FROM product WHERE {} = %(sku)s", {'sku': sku})
     prod = c.fetchone()
@@ -19,7 +19,7 @@ def dostuff(form, c, conn):
         print("</form>")
         return
     else:
-        cursor.execute("UPDATE product SET price = {price}, description = {descr} WHERE SKU = {sku}")
+        cursor.execute("UPDATE product SET price = %(price)s, description = %(descr)s WHERE SKU = %(sku)s", {'price': price, 'descr': descr, 'sku': sku})
         print("<h1>Product %(sku)s removed successfully.</h1>", {'sku': sku})
         print("<form action='index.HTML'>")
         print("    <input type='submit' value='Go Back'>")
@@ -53,12 +53,7 @@ try:
     form = cgi.FieldStorage()
     form_keys = form.keys()
 
-    if 'product_id_price' in form_keys:
-        modify_product_price(form, c, conn)
-    elif 'product_id_description' in form_keys:
-        modify_product_description(form, c, conn)
-    else:
-        print('<h1> Unexpected behaviour </h1>')
+    dostuff(form, c, conn)
 
     c.close()
 

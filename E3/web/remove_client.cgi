@@ -4,7 +4,7 @@ import re
 import login
 
 def dostuff(form, c, conn):
-    cosn = form.getvalue('get_cust_no')
+    cosn = form.getvalue('customer_id')
 
     c.execute("SELECT * FROM customer WHERE cost_no = %(cosn)s", {'cosn': cosn})
     cost = c.fetchone()

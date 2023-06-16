@@ -4,7 +4,7 @@ import re
 import login
 
 def dostuff(form, c, conn):
-    tin = form.getvalue('get_suplier_tin')
+    tin = form.getvalue('reg_supplier_tin')
 
     c.execute("SELECT * FROM supplier WHERE TIN = %(tin)s", {'tin': tin})
     sup = c.fetchone()
