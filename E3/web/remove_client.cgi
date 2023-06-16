@@ -7,7 +7,9 @@ import login
 def printm(message):
     print(message)
     print("<form action='remove_client.html'>")
+    print("    <div class=""secondary-menu"">")
     print("    <input type='submit' value='Go Back'>")
+    print("    </div>")
     print("</form>")
 
 def dostuff(c, conn, cosn):

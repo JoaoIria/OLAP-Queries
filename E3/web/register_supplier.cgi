@@ -28,15 +28,19 @@ def check_product_exists(cursor, sku):
 
 def print_error(message):
     print("<h1>{}</h1>".format(message))
-    print("<form action='register_supplier.html'>")
+    print("<form action='remove_client.html'>")
+    print("    <div class=""secondary-menu"">")
     print("    <input type='submit' value='Go Back'>")
+    print("    </div>")
     print("</form>")
 
 
 def print_success(message):
     print("<h1>{}</h1>".format(message))
-    print("<form action='register_supplier.html'>")
+    print("<form action='remove_client.html'>")
+    print("    <div class=""secondary-menu"">")
     print("    <input type='submit' value='Go Back'>")
+    print("    </div>")
     print("</form>")
 
 

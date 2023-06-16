@@ -5,14 +5,18 @@ import login
 
 def print_error(message):
     print("<h1>Error: {}</h1>".format(message))
-    print("<form action='make_order.html'>")
+    print("<form action='remove_client.html'>")
+    print("    <div class=""secondary-menu"">")
     print("    <input type='submit' value='Go Back'>")
+    print("    </div>")
     print("</form>")
 
 def print_success(message):
     print("<h1>Success: {}</h1>".format(message))
-    print("<form action='make_order.html'>")
+    print("<form action='remove_client.html'>")
+    print("    <div class=""secondary-menu"">")
     print("    <input type='submit' value='Go Back'>")
+    print("    </div>")
     print("</form>")
 
 def check_customer_existence(c, customer_id):
