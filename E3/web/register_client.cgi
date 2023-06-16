@@ -20,7 +20,7 @@ def print_error(message):
 
 def print_success(message):
     print("<h1>{}</h1>".format(message))
-    print("<form action='index.HTML'>")
+    print("<form action='register_product.html'>")
     print("    <input type='submit' value='Go Back'>")
     print("</form>")
 
