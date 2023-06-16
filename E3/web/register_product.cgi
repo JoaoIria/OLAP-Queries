@@ -70,7 +70,7 @@ def reg_product(form, c, conn):
         }
     )
     conn.commit()
-    print_success("Customer registered successfully")
+    print_success("Product registered successfully")
 
     
 
