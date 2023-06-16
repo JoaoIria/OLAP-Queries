@@ -14,7 +14,7 @@ def check_existing_customer(c, column, value):
     
 def print_error(message):
     print("<h1>{}</h1>".format(message))
-    print("<form action='index.HTML'>")
+    print("<form action='register_client.html'>")
     print("    <input type='submit' value='Go Back'>")
     print("</form>")
 
