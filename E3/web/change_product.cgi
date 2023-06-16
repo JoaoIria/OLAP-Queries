@@ -5,9 +5,9 @@ import login
 
 def dostuff(form, c, conn):
 
-    sku = form.getvalue('product_sku')
-    price = form.getvalue('product_price')
-    descr = form.getvalue('product_description')
+    sku = form.getvalue('change_product_sku')
+    price = form.getvalue('change_product_price')
+    descr = form.getvalue('change_product_description')
 
     c.execute("SELECT * FROM product WHERE {} = %(sku)s", {'sku': sku})
     prod = c.fetchone()

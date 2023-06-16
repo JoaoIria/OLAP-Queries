@@ -6,7 +6,7 @@ import login
 
 def do_stuff(form, c, conn):
 
-    sku = form.getvalue('product_sku')
+    sku = form.getvalue('remove_product_sku')
 
     c.execute("SELECT * FROM product WHERE {} = %(sku)s", {'sku': sku})
     prod = c.fetchone()
