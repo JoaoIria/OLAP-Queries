@@ -12,23 +12,21 @@ def printm(message):
 
 def dostuff(sku, price, descr, c, conn):
 
-    c.execute("SELECT * FROM product WHERE {} = %(sku)s", {'sku': sku})
+    c.execute("SELECT * FROM product WHERE SKU = %(sku)s", {'sku': sku})
     prod = c.fetchone()
 
     if prod is None:
         printm("<h1>Product to be changed " + str(sku) + " doesn't exist.</h1>")
         return
     else:
-        cursor.execute("UPDATE product SET price = %(price)s, description = %(descr)s WHERE SKU = %(sku)s", {'price': price, 'descr': descr, 'sku': sku})
-        printm("<h1>Product " + str(sku) + " removed successfully.</h1>")
-        conn.commit()x
+        c.execute("UPDATE product SET price = %(price)s, description = %(descr)s WHERE SKU = %(sku)s", {'price': price, 'descr': descr, 'sku': sku})
+        printm("<h1>Product " + str(sku) + " changed successfully.</h1>")
+        conn.commit()
     return
 
 
 
 conn = None
-dsn = f'host={db_host} port={db_port} user={data_base} password={db_password} dbname={data_base}'
-
 print("Content-type: text/html\n\n")
 
 print('''

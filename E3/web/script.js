@@ -39,17 +39,8 @@ function getSecondaryMenuContent(menuName) {
       `;
 
     case 'remove_product':
-      return `
-        <div class="secondary-menu">
-          <h2>Remove Products</h2>
-          <form action="remove_product.cgi" method="post">
-            <label for="product_sku">Product SKU:</label>
-            <input type="text" name="remove_product_sku" id="product_sku" required>
-            <br><br>
-            <input type="submit" value="Remove">
-          </form>
-        </div>
-      `;
+      window.location.replace("remove_product.html");
+      return;
 
     case 'register_supplier':
       return `
@@ -77,37 +68,12 @@ function getSecondaryMenuContent(menuName) {
       `;
 
       case 'remove_supplier':
-            return `
-              <div class="secondary-menu">
-                <h2>Remove Supplier</h2>
-                <form action="remove_supplier.cgi" method="post">
-                <div class="secondary-menu">
-                  <label for="reg_supplier_tin">Supplier TIN:</label>
-                  <input type="text" name="reg_supplier_tin" id="reg_supplier_tin" required>
-                  <br><br>
-                  <input type="submit" value="Remove">
-                  </form>
-              </div>
-            `;
+            window.location.replace("remove_supplier.html");
+            return;
 
       case 'change_product':
-            return `
-              <div class="secondary-menu">
-              <h2>Change Product</h2>
-              <form action="change_product.cgi" method="post">
-                <label for="product_sku">Product SKU:</label>
-                <input type="text" name="change_product_sku" id="product_sku" required>
-                <br><br>
-                <label for="product_price">New Product Price:</label>
-                <input type="text" name="change_product_price" id="product_price">
-                <br><br>
-                <label for="product_description">New Product Description:</label>
-                <textarea name="change_product_description" id="product_description"></textarea>
-                <br><br>
-                <input type="submit" value="Submit">
-              </form>
-              </div>
-            `;
+            window.location.replace("change_product.html");
+            return;
 
 
       case 'register_client':
