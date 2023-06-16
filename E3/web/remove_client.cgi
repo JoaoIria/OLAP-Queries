@@ -23,7 +23,7 @@ def dostuff(c, conn, cosn):
         c.execute("DELETE FROM customer WHERE cust_no = %s", (cosn,))
         
         conn.commit()
-        printm(<h1>Customer " + str(cosn) + " removed successfully.</h1>)
+        printm("<h1>Customer " + str(cosn) + " removed successfully.</h1>")
     return
 
 conn = None
@@ -45,6 +45,7 @@ try:
     c = conn.cursor()
     form = cgi.FieldStorage()
     form_keys = form.keys()
+    
     cosn = form.getvalue('customer_id')
     dostuff(c, conn, cosn)
 

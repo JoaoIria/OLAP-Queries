@@ -11,19 +11,22 @@ def printm(message):
     print("    <input type='submit' value='Go Back'>")
     print("</form>")
 
-def dostuff(form, c, conn):
-    ordn = tin = form.getvalue('order_id')
-    cusn = tin = form.getvalue('customer_id')
+def dostuff(ordn, cusn, c, conn):
 
     c.execute("SELECT * FROM orders WHERE order_no = %s", (ordn,))
     order = c.fetchone()
-    if cusn NOT order[1]: #check if the customer that's paying is the same as the one that made the order
-        printm("<h1>Order to be payed "+str(ordn)+" isn't associated with the client "+str(cusn)+".</h1>")
+
+    if order is None:
+        printm("<h1>Order to be paid " + str(ordn) + " doesn't exist.</h1>")
+        return
+    
+    if cusn != order[1]:  # check if the customer that's paying is the same as the one that made the order
+        printm("<h1>Order to be paid " + str(ordn) + " isn't associated with the client " + str(cusn) + ".</h1>")
         return
     c.execute("SELECT * FROM pay WHERE order_no = %s", (ordn,))
     pays = c.fetchone()
-    if pays is Not None:
-        printm("<h1>Order to be payed "+str(ordn)+" has already been payed.</h1>")
+    if pays == ():
+        printm("<h1>Order to be payed " + str(ordn) + " has already been payed.</h1>")
         return
     c.execute(
         "INSERT INTO pay VALUES(%(order_no)s, %(customer_no)s",
@@ -33,17 +36,12 @@ def dostuff(form, c, conn):
         }
     )
     conn.commit()
-    print("<h1>Order "+str(ordn)+" payed successfully.</h1>", {'ordn': ordn})
-    print("<form action='index.HTML'>")
-    print("    <input type='submit' value='Go Back'>")
-    print("</form>")
+    printm("<h1>Order " + str(ordn) + " payed successfully.</h1>")
     return
         
 
 
 conn = None
-dsn = f'host={db_host} port={db_port} user={data_base} password={db_password} dbname={data_base}'
-
 print("Content-type: text/html\n\n")
 
 print('''
@@ -61,11 +59,12 @@ try:
     conn = psycopg2.connect(login.credentials)
     conn.autocommit = False
     c = conn.cursor()
-
     form = cgi.FieldStorage()
     form_keys = form.keys()
 
-    dostuff(form, c, conn)
+    ordn = form.getvalue('order_id')
+    cusn = form.getvalue('customer_id')
+    dostuff(ordn, cusn, c, conn)
 
     c.close()
 
