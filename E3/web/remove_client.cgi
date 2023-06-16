@@ -5,7 +5,7 @@ import re
 import login
 
 def printm(message):
-    print("<h1>{}</h1>".format(message))
+    print(message)
     print("<form action='remove_client.html'>")
     print("    <input type='submit' value='Go Back'>")
     print("</form>")
@@ -19,7 +19,6 @@ def dostuff(c, conn, cosn):
         printm("<h1>Customer to be deleted " + str(cosn) + " doesn't exist.</h1>")
         return
     else:
-
         c.execute("DELETE FROM orders WHERE cust_no = %s", (cosn,))
         c.execute("DELETE FROM customer WHERE cust_no = %s", (cosn,))
         

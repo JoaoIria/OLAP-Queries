@@ -4,9 +4,8 @@ import psycopg2
 import re
 import login
 
-
 def printm(message):
-    print("<h1>{}</h1>".format(message))
+    print(message)
     print("<form action='change_product.html'>")
     print("    <input type='submit' value='Go Back'>")
     print("</form>")
@@ -21,11 +20,11 @@ def dostuff(form, c, conn):
     prod = c.fetchone()
 
     if prod is None:
-        printm("<h1>Product to be changed " + sku + " doesn't exist.</h1>")
+        printm("<h1>Product to be changed " + str(sku) + " doesn't exist.</h1>")
         return
     else:
         cursor.execute("UPDATE product SET price = %(price)s, description = %(descr)s WHERE SKU = %(sku)s", {'price': price, 'descr': descr, 'sku': sku})
-        printm("<h1>Product " + sku + " removed successfully.</h1>")
+        printm("<h1>Product " + str(sku) + " removed successfully.</h1>")
         conn.commit()x
     return
 

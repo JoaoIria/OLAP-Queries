@@ -4,6 +4,11 @@ import psycopg2
 import re
 import login
 
+def printm(message):
+    print(message)
+    print("<form action='remove_product.html'>")
+    print("    <input type='submit' value='Go Back'>")
+    print("</form>")
 
 def do_stuff(form, c, conn):
 
@@ -13,20 +18,14 @@ def do_stuff(form, c, conn):
     prod = c.fetchone()
 
     if prod is None:
-        print("<h1>Product to be deleted %(sku)s doesn't exist.</h1>", {'sku': sku})
-        print("<form action='index.HTML'>")
-        print("    <input type='submit' value='Go Back'>")
-        print("</form>")
+        printm("<h1>Product to be deleted "+str(sku)+" doesn't exist.</h1>")
         return
     else:
-        cursor.execute("DELETE FROM delivery WHERE SKU = %(sku)s
-            DELETE FROM suplier WHERE SKU = %(sku)s
-            DELETE FROM contains WHERE SKU = %(sku)s
-            DELETE FROM product WHERE SKU = %(sku)s", {'sku': sku})
-        print("<h1>Product %(sku)s removed successfully.</h1>", {'sku': sku})
-        print("<form action='index.HTML'>")
-        print("    <input type='submit' value='Go Back'>")
-        print("</form>")
+        cursor.execute("DELETE FROM delivery WHERE SKU = %(sku)s", {'sku': sku})
+        cursor.execute("DELETE FROM suplier WHERE SKU = %(sku)s", {'sku': sku})
+        cursor.execute("DELETE FROM contains WHERE SKU = %(sku)s", {'sku': sku})
+        cursor.execute("DELETE FROM product WHERE SKU = %(sku)s", {'sku': sku})
+        printm("<h1>Product "+str(sku)+" removed successfully.</h1>")
         conn.commit()
     return
 

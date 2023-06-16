@@ -4,6 +4,13 @@ import psycopg2
 import re
 import login
 
+
+def printm(message):
+    print(message)
+    print("<form action='remove_supplier.html'>")
+    print("    <input type='submit' value='Go Back'>")
+    print("</form>")
+
 def dostuff(form, c, conn):
     tin = form.getvalue('reg_supplier_tin')
 
@@ -11,19 +18,13 @@ def dostuff(form, c, conn):
     sup = c.fetchone()
 
     if sup is None:
-        print("<h1>Suplier to be deleted %(tin)s doesn't exist.</h1>", {'tin': tin})
-        print("<form action='index.HTML'>")
-        print("    <input type='submit' value='Go Back'>")
-        print("</form>")
+        printm("<h1>Suplier to be deleted "+str(tin)+" doesn't exist.</h1>")
         return
     else:
-        cursor.execute("DELETE FROM delivery WHERE TIN = %(tin)s
-            DELETE FROM suplier WHERE TIN = %(tin)s", {'tin': tin})
+        cursor.execute("DELETE FROM delivery WHERE TIN = %(tin)s", {'tin': tin})
+        cursor.execute("DELETE FROM suplier WHERE TIN = %(tin)s", {'tin': tin})
         conn.commit()
-        print("<h1>Product %(tin)s removed successfully.</h1>", {'tin': tin})
-        print("<form action='index.HTML'>")
-        print("    <input type='submit' value='Go Back'>")
-        print("</form>")
+        printm("<h1>Product "+str(tin)+" removed successfully.</h1>")
         conn.commit()
     return
 

@@ -4,6 +4,13 @@ import psycopg2
 import re
 import login
 
+
+def printm(message):
+    print(message)
+    print("<form action='pay_order.html'>")
+    print("    <input type='submit' value='Go Back'>")
+    print("</form>")
+
 def dostuff(form, c, conn):
     ordn = tin = form.getvalue('order_id')
     cusn = tin = form.getvalue('customer_id')
@@ -11,18 +18,12 @@ def dostuff(form, c, conn):
     c.execute("SELECT * FROM orders WHERE order_no = %s", (ordn,))
     order = c.fetchone()
     if cusn NOT order[1]: #check if the customer that's paying is the same as the one that made the order
-        print("<h1>Order to be payed %(ordn)s isn't associated with the client %(cusn)s.</h1>", {'ordn': ordn, 'cusn': cusn})
-        print("<form action='index.HTML'>")
-        print("    <input type='submit' value='Go Back'>")
-        print("</form>")
+        printm("<h1>Order to be payed "+str(ordn)+" isn't associated with the client "+str(cusn)+".</h1>")
         return
     c.execute("SELECT * FROM pay WHERE order_no = %s", (ordn,))
     pays = c.fetchone()
     if pays is Not None:
-        print("<h1>Order to be payed %(ordn)s has already been payed.</h1>", {'ordn': ordn})
-        print("<form action='index.HTML'>")
-        print("    <input type='submit' value='Go Back'>")
-        print("</form>")
+        printm("<h1>Order to be payed "+str(ordn)+" has already been payed.</h1>")
         return
     c.execute(
         "INSERT INTO pay VALUES(%(order_no)s, %(customer_no)s",
@@ -32,7 +33,7 @@ def dostuff(form, c, conn):
         }
     )
     conn.commit()
-    print("<h1>Order %(ordn)s payed successfully.</h1>", {'ordn': ordn})
+    print("<h1>Order "+str(ordn)+" payed successfully.</h1>", {'ordn': ordn})
     print("<form action='index.HTML'>")
     print("    <input type='submit' value='Go Back'>")
     print("</form>")
