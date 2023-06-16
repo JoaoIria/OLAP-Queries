@@ -1,172 +1,73 @@
+#!/usr/bin/env python
 import cgi
 import psycopg2
-import re
+import login
 
-def is_valid_name(name):
-    return bool(re.match("^[a-zA-Z]+$", name))
+def print_error(message):
+    print("<h1>Error: {}</h1>".format(message))
+    print("<form action='index.html'>")
+    print("    <input type='submit' value='Go Back'>")
+    print("</form>")
 
+def print_success(message):
+    print("<h1>Success: {}</h1>".format(message))
+    print("<form action='index.html'>")
+    print("    <input type='submit' value='Go Back'>")
+    print("</form>")
 
-def check_existing_customer(c, column, value):
-    c.execute("SELECT * FROM customer WHERE {} = %({})s".format(column, column), {column: value})
+def check_customer_existence(c, customer_id):
+    c.execute("SELECT * FROM customer WHERE cust_no = %(cust_no)s", {'cust_no': customer_id})
     customer = c.fetchone()
     return customer is not None
 
-def check_product_exists(cursor, sku):
-    cursor.execute("SELECT * FROM product WHERE SKU = %(product_sku)s", {'product_sku': sku})
-    product = cursor.fetchone()
+def check_product_existence(c, product_sku):
+    c.execute("SELECT * FROM product WHERE SKU = %(product_sku)s", {'product_sku': product_sku})
+    product = c.fetchone()
     return product is not None
 
+def check_order_uniqueness(c, order_id):
+    c.execute("SELECT * FROM orders WHERE order_id = %(order_id)s", {'order_id': order_id})
+    order = c.fetchone()
+    return order is None
 
-def check_supplier_exists(cursor, tin):
-    cursor.execute("SELECT * FROM supplier WHERE TIN = %(tin)s", {'tin': tin})
-    supplier = cursor.fetchone()
-    return supplier is not None
+def check_positive_quantity(quantity):
+    return int(quantity) > 0
 
-def check_product_ean(product_ean):
-    if product_ean is None:
-        return None
-    elif not product_ean.isdigit():
-        return "Error: EAN is not a numeric sequence"
-    elif int(product_ean) < 0:
-        return "Error: EAN is negative"
-    else:
-        return None
+def make_order(form, c, connection):
+    order_id = form.getvalue('order_id')
+    order_date = form.getvalue('order_date')
+ 
 
-
-def check_existing_product(cursor, product_sku, product_ean):
-    cursor.execute("SELECT * FROM product WHERE SKU = %(product_sku)s", {'product_sku': product_sku})
-    product = cursor.fetchone()
-
-    if product is not None:
-        return "Error: Product already exists"
-
-    if product_ean is not None:
-        cursor.execute("SELECT * FROM product WHERE ean = %(product_ean)s", {'product_ean': product_ean})
-        product = cursor.fetchone()
-
-        if product is not None:
-            return "Error: Product already exists"
-
-    return None
-
-
-def print_error(message):
-    print("<h1>{}</h1>".format(message))
-    print("<form action='index.HTML'>")
-    print("    <input type='submit' value='Go Back'>")
-    print("</form>")
-
-
-def print_success(message):
-    print("<h1>{}</h1>".format(message))
-    print("<form action='index.HTML'>")
-    print("    <input type='submit' value='Go Back'>")
-    print("</form>")
-
-def reg_customer(form, c, conn):
-    customer_id = form.getvalue('get_customer_id')
-    customer_name = form.getvalue('get_name_register')
-
-    
-    if not is_valid_name(customer_name):
-        print_error("Invalid customer name")
+    if not check_order_uniqueness(c, order_id):
+        print_error("Order with ID {} already exists.".format(order_id))
         return
 
-    # Verificar se um cliente com o ID fornecido já existe
-    if check_existing_customer(c, "cust_no", customer_id):
-        print_error("Error: Customer already exists")
+    customer_id = form.getvalue('customer_id')
+    if not check_customer_existence(c, customer_id):
+        print_error("Customer with ID {} does not exist.".format(customer_id))
         return
 
-    # Verificar se um cliente com o e-mail fornecido já existe
-    customer_email = form.getvalue('get_customer_email')
-    if check_existing_customer(c, "email", customer_email):
-        print_error("Error: Email already exists")
-        return
-    
-    customer_phone = form.getvalue('get_customer_phone')
-    customer_address = form.getvalue('get_customer_adress')
-
-    # Criar o cliente
-    c.execute(
-        "INSERT INTO customer VALUES(%(customer_id)s, %(customer_name)s, %(customer_email)s, %(customer_phone)s, %(customer_address)s)",
-        {
-            'customer_id': customer_id,
-            'customer_name': customer_name,
-            'customer_email': customer_email,
-            'customer_phone': customer_phone,
-            'customer_address': customer_address
-        }
-    )
-
-    conn.commit()
-    print_success("Customer registered successfully")
-
-def reg_supplier(form, c, conn):
-    supplier_name = form.getvalue('get_supplier_name')
-    supplier_address = form.getvalue('get_supplier_address')
-
-    # Check if a supplier with the given TIN already exists
-    
-    c.execute("SELECT * FROM supplier WHERE TIN = %(tin)s", {'tin': supplier_tin})
-    supplier = c.fetchone()
-
-    product_sku = form.getvalue('get_product_sku')
-    if not check_product_exists(c, product_sku):
-        print_error("Error: SKU does not exist")
+    product_sku = form.getvalue('product_sku')
+    if not check_product_existence(c, product_sku):
+        print_error("Product with SKU {} does not exist.".format(product_sku))
         return
 
-    supplier_tin = form.getvalue('get_supplier_tin')
-    if check_supplier_exists(c, supplier_tin):
-        print_error("Error: Supplier already exists")
+    quantity = form.getvalue('quantity')
+    if not check_positive_quantity(quantity):
+        print_error("Quantity must be a positive number.")
         return
-    
 
-    # Create the supplier
-    c.execute(
-        "INSERT INTO supplier VALUES (%(tin)s, %(supplier_name)s, %(supplier_address)s, %(product_sku)s)",
-        {'tin': supplier_tin, 'supplier_name': supplier_name,
-         'supplier_address': supplier_address, 'product_sku': product_sku})
+    try:
+        c.execute("INSERT INTO orders VALUES (%(order_id)s, %(customer_id)s, %(product_sku)s, %(order_date)s, %(quantity)s)",
+                       {'order_id': order_id, 'customer_id': customer_id, 'product_sku': product_sku, 'order_date': order_date, 'quantity': quantity})
 
-    conn.commit()
-    print_success("Supplier registered successfully")
+        connection.commit()
+        print_success("Order added successfully.")
+    except Exception as e:
+        print_error("An error occurred: {}".format(str(e)))
 
-
-def reg_product(form, c, conn):
-    product_sku = form.getvalue('get_product_sku')
-    product_name = form.getvalue('get_product_name')
-    product_description = form.getvalue('get_product_description')
-    product_price = form.getvalue('get_product_price')
-    product_ean = form.getvalue('get_product_ean')
-
-    if check_product_ean(product_ean) is not None:
-        print_error(check_product_ean(product_ean))
-        return
-    
-    if check_existing_product(c, product_sku, product_ean) is not None:
-        print_error(check_existing_product(c, product_sku, product_ean))
-        return
-    c.execute(
-        "INSERT INTO customer VALUES(%(product_sku)s, %(product_name)s, %(product_description)s, %(product_price)s, %(product_ean)s)",
-        {
-            'product_sku': product_sku,
-            'product_name': product_name,
-            'product_description': product_description,
-            'product_price': product_price,
-            'product_ean': product_ean
-        }
-    )
-    conn.commit()
-    print_success("Customer registered successfully")
-
-
-data_base = 'ist1103557'
-db_host = 'db.tecnico.ulisboa.pt'
-db_port = 5432
-db_password = 'aaaa1111'
-db_connection_str = "host=%s port=%d user=%s password=%s dbname=%s" % (db_host, db_port, data_base, db_password, data_base)
-
+# Main program
 conn = None
-dsn = f'host={db_host} port={db_port} user={data_base} password={db_password} dbname={data_base}'
 
 print("Content-type: text/html\n\n")
 
@@ -182,22 +83,19 @@ print('''
 
 try:
     # Estabelecendo conexão
-    conn = psycopg2.connect(dsn)
+    conn = psycopg2.connect(login.credentials)
     conn.autocommit = False
     c = conn.cursor()
 
     form = cgi.FieldStorage()
     form_keys = form.keys()
 
-    if 'make_order_no' in form_keys:
-        make_an_order(form, c, conn)
-    else:
-        print('<h1> Unexpected behaviour </h1>')
+    make_order(form, c, conn)
 
     c.close()
 
 except Exception as e:
-    print('<h1>An error occurred.</h1>')
+    print('<h1>Unexpexted Error.</h1>')
     print('<p>{}</p>'.format(e))
 
 finally:
