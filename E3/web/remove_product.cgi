@@ -10,29 +10,25 @@ def printm(message):
     print("    <input type='submit' value='Go Back'>")
     print("</form>")
 
-def do_stuff(form, c, conn):
+def dostuff(sku, c, conn):
 
-    sku = form.getvalue('remove_product_sku')
-
-    c.execute("SELECT * FROM product WHERE {} = %(sku)s", {'sku': sku})
+    c.execute("SELECT * FROM product WHERE SKU = %s", (sku,))
     prod = c.fetchone()
 
     if prod is None:
-        printm("<h1>Product to be deleted "+str(sku)+" doesn't exist.</h1>")
+        printm("<h1>Product to be deleted " + str(sku) + " doesn't exist.</h1>")
         return
     else:
-        cursor.execute("DELETE FROM delivery WHERE SKU = %(sku)s", {'sku': sku})
-        cursor.execute("DELETE FROM suplier WHERE SKU = %(sku)s", {'sku': sku})
-        cursor.execute("DELETE FROM contains WHERE SKU = %(sku)s", {'sku': sku})
-        cursor.execute("DELETE FROM product WHERE SKU = %(sku)s", {'sku': sku})
-        printm("<h1>Product "+str(sku)+" removed successfully.</h1>")
+        c.execute("DELETE FROM delivery WHERE SKU = %s", (sku,))
+        c.execute("DELETE FROM suplier WHERE SKU = %s", (sku,))
+        c.execute("DELETE FROM contains WHERE SKU = %s", (sku,))
+        c.execute("DELETE FROM product WHERE SKU = %s", (sku,))
+        printm("<h1>Product " + str(sku) + " removed successfully.</h1>")
         conn.commit()
     return
 
 
 conn = None
-dsn = f'host={db_host} port={db_port} user={data_base} password={db_password} dbname={data_base}'
-
 print("Content-type: text/html\n\n")
 
 print('''
@@ -54,7 +50,8 @@ try:
     form = cgi.FieldStorage()
     form_keys = form.keys()
 
-    dostuff(form, c, conn)
+    sku = form.getvalue('remove_product_sku')
+    dostuff(sku, c, conn)
 
     c.close()
 
