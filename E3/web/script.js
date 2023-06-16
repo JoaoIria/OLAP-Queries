@@ -94,7 +94,7 @@ function getSecondaryMenuContent(menuName) {
             return `
               <div class="secondary-menu">
               <h2>Change Product</h2>
-              <form action="change_products.cgi" method="post">
+              <form action="change_product.cgi" method="post">
                 <label for="product_sku">Product SKU:</label>
                 <input type="text" name="change_product_sku" id="product_sku" required>
                 <br><br>
@@ -137,17 +137,8 @@ function getSecondaryMenuContent(menuName) {
 
 
       case 'remove_client':
-            return `
-              <div class="secondary-menu">
-                <h2>Remove Client</h2>
-                <form action="remove_client.cgi" method="post">
-                <label for="customer_id">Customer ID:</label>
-                <input type="text" name="customer_id" id="customer_id" required>
-                  <br><br>
-                  <input type="submit" value="Remove">
-                </form>
-              </div>
-            `;
+            window.location.replace("remove_client.html");
+            return;
   
       case 'make_order':
             return `
@@ -175,20 +166,8 @@ function getSecondaryMenuContent(menuName) {
             `;
 
       case 'pay_order':
-            return `
-              <div class="secondary-menu">
-                <h2>Pay Order</h2>
-                <form action="pay_order.cgi" method="post">
-                <label for="order_id">Order ID:</label>
-                <input type="text" name="order_id" id="order_id" required>
-                <br><br>
-                <label for="customer_id">Customer ID:</label>
-                <input type="text" name="customer_id" id="customer_id" required>
-                <br><br>
-                <input type="submit" value="Pay">
-                </form>
-              </div>
-            `;
+            window.location.replace("pay_order.html");
+            return;
   
       // Add other menu options with their respective HTML content
   

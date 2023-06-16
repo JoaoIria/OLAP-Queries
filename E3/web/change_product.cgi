@@ -10,11 +10,7 @@ def printm(message):
     print("    <input type='submit' value='Go Back'>")
     print("</form>")
 
-def dostuff(form, c, conn):
-
-    sku = form.getvalue('change_product_sku')
-    price = form.getvalue('change_product_price')
-    descr = form.getvalue('change_product_description')
+def dostuff(sku, price, descr, c, conn):
 
     c.execute("SELECT * FROM product WHERE {} = %(sku)s", {'sku': sku})
     prod = c.fetchone()
@@ -54,7 +50,10 @@ try:
     form = cgi.FieldStorage()
     form_keys = form.keys()
 
-    dostuff(form, c, conn)
+    sku = form.getvalue('change_product_sku')
+    price = form.getvalue('change_product_price')
+    descr = form.getvalue('change_product_description')
+    dostuff(sku, price, descr, c, conn)
 
     c.close()
 
