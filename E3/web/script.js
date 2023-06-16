@@ -25,7 +25,7 @@ function getSecondaryMenuContent(menuName) {
       return `
         <div class="secondary-menu">
           <h2>Register Products</h2>
-          <form action="app.cgi" method="post">
+          <form action="register_product.cgi" method="post">
             <label for="product_sku">Product SKU:</label>
             <input type="text" name="reg_product_sku" id="product_sku" required>
             <br><br>
@@ -63,8 +63,8 @@ function getSecondaryMenuContent(menuName) {
       return `
         <div class="secondary-menu">
           <h2>Register Supplier</h2>
-          <form action="app.cgi" method="post">
-            <label for="reg_supplier_tin">Supplier SKU:</label>
+          <form action="register_supplier.cgi" method="post">
+            <label for="reg_supplier_tin">Supplier TIN:</label>
             <input type="text" name="reg_supplier_tin" id="reg_supplier_tin" required>
             <br><br>
             <label for="reg_supplier_name">Supplier Name:</label>
@@ -99,7 +99,7 @@ function getSecondaryMenuContent(menuName) {
             return `
               <div class="secondary-menu">
               <h2>Change Product</h2>
-              <form action="change_product.cgi" method="post">
+              <form action="change_products.cgi" method="post">
                 <label for="product_sku">Product SKU:</label>
                 <input type="text" name="change_product_sku" id="product_sku" required>
                 <br><br>
@@ -119,7 +119,7 @@ function getSecondaryMenuContent(menuName) {
             return `
               <div class="secondary-menu">
                 <h2>Register Client</h2>
-                <form action="app.cgi" method="post">
+                <form action="register_client.cgi" method="post">
                 <label for="customer_id">Customer ID:</label>
                 <input type="text" name="customer_id" id="customer_id" required>
                 <br><br>

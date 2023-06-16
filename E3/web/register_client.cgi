@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import cgi
 import psycopg2
 import re
@@ -24,8 +25,8 @@ def print_success(message):
     print("</form>")
 
 def reg_customer(form, c, conn):
-    customer_id = form.getvalue('get_customer_id')
-    customer_name = form.getvalue('get_name_register')
+    customer_id = form.getvalue('customer_id')
+    customer_name = form.getvalue('reg_name')
     
     if not is_valid_name(customer_name):
         print_error("Invalid customer name")
@@ -37,13 +38,13 @@ def reg_customer(form, c, conn):
         return
 
     # Verificar se um cliente com o e-mail fornecido já existe
-    customer_email = form.getvalue('get_customer_email')
+    customer_email = form.getvalue('reg_email')
     if check_existing_customer(c, "email", customer_email):
         print_error("Error: Email already exists")
         return
     
-    customer_phone = form.getvalue('get_customer_phone')
-    customer_address = form.getvalue('get_customer_adress')
+    customer_phone = form.getvalue('reg_phone')
+    customer_address = form.getvalue('reg_address')
 
     # Criar o cliente
     c.execute(

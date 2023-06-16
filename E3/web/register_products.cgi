@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import cgi
 import psycopg2
 import re
@@ -45,7 +46,7 @@ def print_success(message):
 
 
 def reg_product(form, c, conn):
-    product_sku = form.getvalue('get_product_sku')
+    product_sku = form.getvalue('reg_product_sku')
     product_name = form.getvalue('get_product_name')
     product_description = form.getvalue('get_product_description')
     product_price = form.getvalue('get_product_price')

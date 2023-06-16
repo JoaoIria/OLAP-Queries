@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import cgi
 import psycopg2
 import re
