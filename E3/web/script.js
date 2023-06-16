@@ -7,14 +7,6 @@ function openSecondaryMenu(menuName) {
     mainMenu.style.display = 'none';
 
     secondaryMenuContainer.innerHTML = secondaryMenuContent;
-
-    const backButton = document.createElement('button');
-    backButton.innerText = 'Return to Main Menu';
-    backButton.onclick = function() {
-      mainMenu.style.display = 'flex';
-      secondaryMenuContainer.innerHTML = '';
-    };
-
     secondaryMenuContainer.appendChild(backButton);
   }
 }
@@ -153,7 +145,7 @@ function getSecondaryMenuContent(menuName) {
                 <input type="text" name="customer_id" id="customer_id" required>
                   <br><br>
                   <input type="submit" value="Remove">
-                  </form>
+                </form>
               </div>
             `;
   

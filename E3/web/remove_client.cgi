@@ -4,16 +4,19 @@ import psycopg2
 import re
 import login
 
+def printm(message):
+    print("<h1>{}</h1>".format(message))
+    print("<form action='remove_client.html'>")
+    print("    <input type='submit' value='Go Back'>")
+    print("</form>")
+
 def dostuff(c, conn, cosn):
 
     c.execute("SELECT cust_no FROM customer WHERE cust_no = %s", (cosn,))
     cust = c.fetchall()
 
     if len(cust) == 0:
-        print("<h1>Customer to be deleted " + str(cosn) + " doesn't exist.</h1>")
-        print("<form action='index.HTML'>")
-        print("    <input type='submit' value='Go Back'>")
-        print("</form>")
+        printm("<h1>Customer to be deleted " + str(cosn) + " doesn't exist.</h1>")
         return
     else:
 
@@ -21,10 +24,7 @@ def dostuff(c, conn, cosn):
         c.execute("DELETE FROM customer WHERE cust_no = %s", (cosn,))
         
         conn.commit()
-        print("<h1>Customer " + str(cosn) + " removed successfully.</h1>")
-        print("<form action='website.html'>")
-        print("    <input type='submit' value='Go Back'>")
-        print("</form>")
+        printm(<h1>Customer " + str(cosn) + " removed successfully.</h1>)
     return
 
 conn = None
