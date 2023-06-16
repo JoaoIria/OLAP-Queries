@@ -640,7 +640,7 @@ VALUES
  -- orders need to be in contains due to RI-3
 START	TRANSACTION;
 SET	CONSTRAINTS	ALL	DEFERRED;
-INSERT INTO order_ (order_no, date, cust_no)
+INSERT INTO orders (order_no, date, cust_no)
 VALUES
     (2001, '2022-04-08', 1001),
     (2002, '2022-10-12', 1002),

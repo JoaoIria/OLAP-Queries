@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python
 import cgi
 import psycopg2
 import re
@@ -31,13 +31,15 @@ conn = None
 
 print("Content-type: text/html\n\n")
 
-print('<html>')
-print('<head>')
-print('<title>Request Answer</title>')
-print('<link rel="stylesheet" type="text/css" href="style.css">')
-print('<head>')
-print('<body>')
-print('<div class="container">')
+print('''
+<html>
+<head>
+<title>Request Answer</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+<div class="container">
+''')
 
 try:
     #Estabelecendo conexão
@@ -59,7 +61,7 @@ except Exception as e:
 finally:
     if conn is not None:
         conn.close()
-        
+
 print("</div>")
 print('</body>')
 print('</html>')
