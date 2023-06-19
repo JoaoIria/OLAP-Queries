@@ -17,7 +17,7 @@ def dostuff(c, conn, cosn):
     c.execute("SELECT cust_no FROM customer WHERE cust_no = %s", (cosn,))
     cust = c.fetchall()
 
-    if cust is None:
+    if len(cust) == 0:
         printm("<h1>Customer to be deleted " + str(cosn) + " doesn't exist.</h1>")
         return
     else:
